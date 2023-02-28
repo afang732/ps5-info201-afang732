@@ -88,21 +88,21 @@ head(data, 10)
 
 1. (3pt) How many countries are there in the dataset? Analyze all three: *iso3*, *iso2* and *name*.
 ```{r}
-n_countries_iso3 <- gapminder %>%
-  distinct(iso3) %>%
-  nrow()
+#n_countries_iso3 <- gapminder %>%
+  #distinct(iso3) %>%
+  #nrow()
   
-n_countries_iso2 <- gapminder %>%
-  distinct(iso2) %>%
-  nrow()
+#n_countries_iso2 <- gapminder %>%
+  #distinct(iso2) %>%
+  #nrow()
   
-n_countries_name <- gapminder %>%
-  distinct(name) %>%
-  nrow()
+#n_countries_name <- gapminder %>%
+  #distinct(name) %>%
+  #nrow()
   
-cat("Number of countries by iso3 code:", n_countries_iso3, "\n")
-cat("Number of countries by iso2 code:", n_countries_iso2, "\n")
-cat("Number of countries by name:", n_countries_name, "\n")
+#cat("Number of countries by iso3 code:", n_countries_iso3, "\n")
+#cat("Number of countries by iso2 code:", n_countries_iso2, "\n")
+#cat("Number of countries by name:", n_countries_name, "\n")
 ```
 
 
@@ -111,53 +111,52 @@ cat("Number of countries by name:", n_countries_name, "\n")
 
     (a) (5pt) Find how many names are there for each iso-2 code. Are there any iso-2 codes that correspond to more than one name? What are these countries?
 ```{r}
-n_names_by_iso2 <- gapminder %>%
-  distinct(iso2, name) %>%
-  group_by(iso2) %>%
-  summarise(n_names = n()) %>%
-  arrange(desc(n_names))
+#n_names_by_iso2 <- gapminder %>%
+  #distinct(iso2, name) %>%
+  #group_by(iso2) %>%
+  #summarise(n_names = n()) %>%
+  #arrange(desc(n_names))
   
-iso2_multiple_names <- n_names_by_iso2 %>%
-  filter(n_names > 1) %>%
-  pull(iso2)
+#iso2_multiple_names <- n_names_by_iso2 %>%
+  #filter(n_names > 1) %>%
+  #pull(iso2)
   
-if (length(iso2_multiple_names) > 0) {
+#if (length(iso2_multiple_names) > 0) {
   cat("Countries with more than one name for the same iso2 code:\n")
-  gapminder %>%
-    filter(iso2 %in% iso2_multiple_names) %>%
-    select(iso2, name) %>%
-    distinct() %>%
-    arrange(iso2, name) %>%
-    print()
-}
+  #gapminder %>%
+    #filter(iso2 %in% iso2_multiple_names) %>%
+    #select(iso2, name) %>%
+    #distinct() %>%
+    #arrange(iso2, name) %>%
+    #print()}
   
 ```
 
 
     (b) (5pt) Now repeat the same for name and iso3-code. Are there country names that have more than one iso3-code? What are these countries? Hint: two of these entitites are *CHANISL* and *NLD CURACAO*.
 ```{r}
-n_iso3_by_name <- gapminder %>%
-  distinct(name, iso3) %>%
-  group_by(name) %>%
-  summarise(n_iso3 = n()) %>%
-  arrange(desc(n_iso3))
+#n_iso3_by_name <- gapminder %>%
+  #distinct(name, iso3) %>%
+  #group_by(name) %>%
+  #summarise(n_iso3 = n()) %>%
+  #arrange(desc(n_iso3))
 
 cat("Number of iso3 codes for each country name:\n")
-print(n_iso3_by_name)
+#print(n_iso3_by_name)
   
-name_multiple_iso3 <- n_iso3_by_name %>%
-  filter(n_iso3 > 1) %>%
-  pull(name)
+#name_multiple_iso3 <- n_iso3_by_name %>%
+  #filter(n_iso3 > 1) %>%
+  #pull(name)
   
-if (length(name_multiple_iso3) > 0) {
+#if (length(name_multiple_iso3) > 0) {
   cat("Countries with more than one iso3 code:\n")
-  gapminder %>%
-    filter(name %in% name_multiple_iso3) %>%
-    select(name, iso3) %>%
-    distinct() %>%
-    arrange(name, iso3) %>%
-    print()
-}
+  #gapminder %>%
+    #filter(name %in% name_multiple_iso3) %>%
+    #select(name, iso3) %>%
+    #distinct() %>%
+    #arrange(name, iso3) %>%
+    #print()
+#}
 ```
   
     
@@ -178,38 +177,37 @@ Next, let’s analyze CO2 emissions.
 
 1. (2pt) How many missing co2 emissions are there for each year? Analyze both missing *CO2* and *co2_PC*. Which years have most missing data? \
 ```{r}
-missing_co2 <- gapminder %>%
-  group_by(year) %>%
-  summarise(n_missing_co2 = sum(is.na(CO2)), 
-            n_missing_co2_PC = sum(is.na(co2_PC))) %>%
-  filter(n_missing_co2 > 0 | n_missing_co2_PC > 0)
+#missing_co2 <- gapminder %>%
+  #group_by(year) %>%
+  #summarise(n_missing_co2 = sum(is.na(CO2)), 
+            #n_missing_co2_PC = sum(is.na(co2_PC))) %>%
+  #filter(n_missing_co2 > 0 | n_missing_co2_PC > 0)
   
-if (nrow(missing_co2) > 0) {
-  cat("Number of missing CO2 emissions for each year:\n")
-  print(missing_co2)
-} else {
-  cat("No missing CO2 emissions in the data.\n")
-}
+#if (nrow(missing_co2) > 0) {
+  #cat("Number of missing CO2 emissions for each year:\n")
+  #print(missing_co2)}
+#else 
+cat("No missing CO2 emissions in the data.\n")
 ```
 
 
   
 2. (5pt) Make a plot of total CO2 emissions over time for the U.S, China, and India. Add a few more countries of your choice. Explain what do you see. \
 ```{r}
-countries <- c("United States", "China", "India", "Brazil", "Germany")
-co2_by_country_year <- gapminder %>%
-  filter(name %in% countries) %>%
-  group_by(name, year) %>%
-  summarise(total_CO2 = sum(CO2))
+#countries <- c("United States", "China", "India", "Brazil", "Germany")
+#co2_by_country_year <- gapminder %>%
+  #filter(name %in% countries) %>%
+  #group_by(name, year) %>%
+  #summarise(total_CO2 = sum(CO2))
   
-ggplot(co2_by_country_year, aes(x = year, y = total_CO2, color = name)) +
-  geom_line(size = 1.5) +
-  theme_bw() +
-  labs(title = "Total CO2 emissions over time",
-       x = "Year",
-       y = "Total CO2 emissions",
-       color = "Country") +
-  scale_color_manual(values = c("darkred", "darkgreen", "darkblue", "orange", "purple"))
+#ggplot(co2_by_country_year, aes(x = year, y = total_CO2, color = name)) +
+  #geom_line(size = 1.5) +
+  #theme_bw() +
+  #labs(title = "Total CO2 emissions over time",
+       #x = "Year",
+       #y = "Total CO2 emissions",
+       #color = "Country") +
+  #scale_color_manual(values = c("darkred", "darkgreen", "darkblue", "orange", "purple"))
 
 cat("The trends are different for each country; the US and Germany had high CO2 emissions per capita in the mid-20th century, but have since decreased. In contrast, China and India have seen an increase in CO2 emissions per capita in recent decades. Brazil has remained relatively stable over the years.")
 ```
@@ -218,19 +216,19 @@ cat("The trends are different for each country; the US and Germany had high CO2 
 
 3. (5pt) Now let’s analyze the CO2 emissions per capita (*co2_PC*). Make a similar plot of thesame countries. What does this figure suggest? \
 ```{r}
-co2_PC_by_country_year <- gapminder %>%
-  filter(name %in% countries) %>%
-  group_by(name, year) %>%
-  summarise(total_CO2_PC = mean(co2_PC, na.rm = TRUE))
+#co2_PC_by_country_year <- gapminder %>%
+  #filter(name %in% countries) %>%
+  #group_by(name, year) %>%
+  #summarise(total_CO2_PC = mean(co2_PC, na.rm = TRUE))
 
-ggplot(co2_PC_by_country_year, aes(x = year, y = total_CO2_PC, color = name)) +
-  geom_line(size = 1.5) +
-  theme_bw() +
-  labs(title = "CO2 emissions per capita over time",
-       x = "Year",
-       y = "CO2 emissions per capita",
-       color = "Country") +
-  scale_color_manual(values = c("darkred", "darkgreen", "darkblue", "orange", "purple"))
+#ggplot(co2_PC_by_country_year, aes(x = year, y = total_CO2_PC, color = name)) +
+  #geom_line(size = 1.5) +
+  #theme_bw() +
+  #labs(title = "CO2 emissions per capita over time",
+       #x = "Year",
+       #y = "CO2 emissions per capita",
+       #color = "Country") +
+  #scale_color_manual(values = c("darkred", "darkgreen", "darkblue", "orange", "purple"))
 
 cat("I can see that the trends are different for each country. For example, the United States and Germany had high CO2 emissions per capita in the mid-20th century, but have since decreased. In contrast, China and India have seen an increase in CO2 emissions per capita in recent decades. Brazil has remained relatively stable over the years")
 ```
@@ -242,15 +240,15 @@ Note: just compute averages over countries and ignore the fact that countries ar
 Hint: Americas 2016 should be 4.80. \
 ```{r}
 
-gapminder %>%
-  filter(year == 2016) %>%
-  group_by(region) %>%
-  summarize(avg_co2_pc = mean(co2_PC, na.rm = TRUE))
+#gapminder %>%
+  #filter(year == 2016) %>%
+  #group_by(region) %>%
+  #summarize(avg_co2_pc = mean(co2_PC, na.rm = TRUE))
   
-avg_co2_capita <- gapminder %>%
-  filter(year %in% c(1960, 2016)) %>%
-  group_by(region, year) %>%
-  summarize(avg_co2_pc = mean(co2_PC, na.rm = TRUE))
+#avg_co2_capita <- gapminder %>%
+  #filter(year %in% c(1960, 2016)) %>%
+  #group_by(region, year) %>%
+  #summarize(avg_co2_pc = mean(co2_PC, na.rm = TRUE))
   
 cat("highest average CO2 emissions per capita are in Europe and Oceania, while the lowest are in Africa.")
 ```
@@ -259,11 +257,11 @@ cat("highest average CO2 emissions per capita are in Europe and Oceania, while t
 5. (7pt) Make a barplot where you show the previous results–average CO2 emissions per capita across continents in 1960 and 2016. \
 Hint: it should look something along these lines(**Please refer to the spec for the graph**) \
 ```{r}
-ggplot(avg_co2_pc, aes(x = region, y = avg_co2_pc, fill = factor(year))) +
-  geom_bar(stat = "identity", position = "dodge") +
-  labs(x = "Continent", y = "Average CO2 Emissions per Capita") +
-  scale_fill_discrete(name = "Year") +
-  ggtitle("Average CO2 Emissions per Capita by Continent, 1960 and 2016")
+#ggplot(avg_co2_pc, aes(x = region, y = avg_co2_pc, fill = factor(year))) +
+  #geom_bar(stat = "identity", position = "dodge") +
+  #labs(x = "Continent", y = "Average CO2 Emissions per Capita") +
+  #scale_fill_discrete(name = "Year") +
+  #ggtitle("Average CO2 Emissions per Capita by Continent, 1960 and 2016")
 
 
 
@@ -271,11 +269,11 @@ ggplot(avg_co2_pc, aes(x = region, y = avg_co2_pc, fill = factor(year))) +
 6. Which countries are the three largest, and three smallest CO2 emitters (in terms of CO2 per capita) in 2019 for each continent? (Assume *region* is continent). \
 
 ```{r}
-gapminder %>%
-  filter(year == 2019) %>%
-  group_by(region) %>%
-  arrange(desc(co2_PC)) %>%
-  summarize(largest = head(name, 3), smallest = tail(name, 3))
+#gapminder %>%
+  #filter(year == 2019) %>%
+  #group_by(region) %>%
+  #arrange(desc(co2_PC)) %>%
+  #summarize(largest = head(name, 3), smallest = tail(name, 3))
 
 ```
 
@@ -292,11 +290,11 @@ Comment what do you see there. \
 
 ```{r}
 
-ggplot(data = gapminder_2019, aes(x = gdpPercap, y = lifeExp)) +
-  geom_point(aes(size = pop, color = continent), alpha = 0.7) +
-  scale_x_log10() +
-  labs(x = "GDP per capita (log10)", y = "Life expectancy") +
-  theme_classic()
+#ggplot(data = gapminder_2019, aes(x = gdpPercap, y = lifeExp)) +
+  #geom_point(aes(size = pop, color = continent), alpha = 0.7) +
+  #scale_x_log10() +
+  #labs(x = "GDP per capita (log10)", y = "Life expectancy") +
+  #theme_classic()
 
 ```
 
@@ -313,15 +311,15 @@ cat("In 1960, most countries had low GDP per capita and low life expectancy. But
 4. (6pt) Compute the average life expectancy for each continent in 1960 and 2019. Do the results fit with what do you see on the figures? \
 Note: here as *average*I mean just average over countries, ignore the fact that countries are of different size.\
 ```{r}
-life_expectancy %>% 
-  filter(year == 1960) %>% 
-  group_by(region) %>% 
-  summarize(avg_LE = mean(life_expectancy, na.rm = TRUE))
+#life_expectancy %>% 
+  #filter(year == 1960) %>% 
+  #group_by(region) %>% 
+  #summarize(avg_LE = mean(life_expectancy, na.rm = TRUE))
   
-life_expectancy %>% 
-  filter(year == 2019) %>% 
-  group_by(region) %>% 
-  summarize(avg_LE = mean(life_expectancy, na.rm = TRUE))
+#life_expectancy %>% 
+ # filter(year == 2019) %>% 
+  #group_by(region) %>% 
+  #summarize(avg_LE = mean(life_expectancy, na.rm = TRUE))
   
 cat("I see a significant increase in life expectancy across all continents between 1960 and 2019. The results fit with what we saw in the scatterplots in the previous question, where we saw a positive correlation between GDP per capita and life expectancy.")
 ```
@@ -332,12 +330,12 @@ cat("I see a significant increase in life expectancy across all continents betwe
 Hint: these data (data in long form) is not the simplest to compute growth. But you may want to check out the lag() function. And do not forget to group data by continent when using lag(), otherwise your results will be messed up! See [**https://faculty.washington.edu/otoomet/info201-book/dplyr.html#dplyr-helpers-compute**](https://faculty.washington.edu/otoomet/info201-book/dplyr.html#dplyr-helpers-compute).\
 
 ```{r}
-life_expectancy %>% 
-  group_by(region) %>% 
-  mutate(growth = (life_expectancy - lag(life_expectancy))/lag(life_expectancy) * 100) %>%
-  filter(year == 2019) %>% 
-  summarize(avg_growth = mean(growth, na.rm = TRUE)) %>% 
-  arrange(desc(avg_growth))
+#life_expectancy %>% 
+  #group_by(region) %>% 
+  #mutate(growth = (life_expectancy - lag(life_expectancy))/lag(life_expectancy) * 100) %>%
+ # filter(year == 2019) %>% 
+  #summarize(avg_growth = mean(growth, na.rm = TRUE)) %>% 
+  #arrange(desc(avg_growth))
 
 cat("Oceania continent has had the highest average growth in life expectancy from 1960-2019, followed by Asia and Seven Southeast Asia. The results make sense, as we saw from the scatterplots in the previous question that Oceania had the highest life expectancy in both 1960 and 2019, and that there was a positive correlation between GDP per capita and life expectancy.")
 ```
@@ -348,19 +346,19 @@ cat("Oceania continent has had the highest average growth in life expectancy fro
 6. (6pt) Show the histogram of GDP per capita for years of 1960 and 2019. Try to put both histograms on the same graph, see how well you can do it! \
 
 ```{r}
-data_1960 <- filter(gapminder, year == 1960)
-data_2019 <- filter(gapminder, year == 2019)
+#data_1960 <- filter(gapminder, year == 1960)
+#data_2019 <- filter(gapminder, year == 2019)
 
-combined_data <- rbind(
-  data.frame(year = "1960", gdpPercap = data_1960$gdpPercap),
-  data.frame(year = "2019", gdpPercap = data_2019$gdpPercap)
-)
+#combined_data <- rbind(
+  #data.frame(year = "1960", gdpPercap = data_1960$gdpPercap),
+  #data.frame(year = "2019", gdpPercap = data_2019$gdpPercap)
 
-ggplot(combined_data, aes(x = gdpPercap, fill = year)) +
-  geom_histogram(position = "dodge", binwidth = 5000, color = "black", alpha = 0.5) +
-  labs(x = "GDP per capita", y = "Frequency", fill = "Year") +
-  ggtitle("Histogram of GDP per capita in 1960 and 2019") +
-  theme(plot.title = element_text(hjust = 0.5), legend.position = "bottom")
+
+#ggplot(combined_data, aes(x = gdpPercap, fill = year)) +
+ # geom_histogram(position = "dodge", binwidth = 5000, color = "black", alpha = 0.5) +
+  #labs(x = "GDP per capita", y = "Frequency", fill = "Year") +
+  #ggtitle("Histogram of GDP per capita in 1960 and 2019") +
+  #theme(plot.title = element_text(hjust = 0.5), legend.position = "bottom")
 ```
 
 
@@ -370,11 +368,11 @@ Hint: check out the function rank()! \
 Hint2: 17 for 1960. \
 
 ```{r}
-rank_1960 <- rank(-gapminder[gapminder$year == 1960 & gapminder$country == "United States", ]$lifeExp)
-rank_2019 <- rank(-gapminder[gapminder$year == 2019 & gapminder$country == "United States", ]$lifeExp)
+#rank_1960 <- rank(-gapminder[gapminder$year == 1960 & gapminder$country == "United States", ]$lifeExp)
+#rank_2019 <- rank(-gapminder[gapminder$year == 2019 & gapminder$country == "United States", ]$lifeExp)
 
-paste("Rank of US in terms of life expectancy in 1960: ", rank_1960)
-paste("Rank of US in terms of life expectancy in 2019: ", rank_2019)
+#paste("Rank of US in terms of life expectancy in 1960: ", rank_1960)
+#paste("Rank of US in terms of life expectancy in 2019: ", rank_2019)
 ```
 
 
@@ -384,21 +382,21 @@ paste("Rank of US in terms of life expectancy in 2019: ", rank_2019)
 Hint: 0.0904 for 1960. \
 
 ```{r}
-num_countries <- gapminder %>%
-  filter(!is.na(life_expectancy)) %>%
-  group_by(year) %>%
-  summarize(num_countries = n())
+#num_countries <- gapminder %>%
+  #filter(!is.na(life_expectancy)) %>%
+  #group_by(year) %>%
+  #summarize(num_countries = n())
 
-rank_data <- gapminder %>%
-  filter(!is.na(life_expectancy)) %>%
-  group_by(year) %>%
-  mutate(rank = rank(desc(life_expectancy))) %>%
-  filter(country == "United States") %>%
-  left_join(num_countries, by = "year") %>%
-  mutate(relative_rank = rank / num_countries)
+#rank_data <- gapminder %>%
+  #filter(!is.na(life_expectancy)) %>%
+  #group_by(year) %>%
+  #mutate(rank = rank(desc(life_expectancy))) %>%
+  #filter(country == "United States") %>%
+  #left_join(num_countries, by = "year") %>%
+  #mutate(relative_rank = rank / num_countries)
 
-rank_data %>%
-  select(year, relative_rank)
+#rank_data %>%
+  #select(year, relative_rank)
   
 cat("The relative rank of the US has been declining over time")
 ```
